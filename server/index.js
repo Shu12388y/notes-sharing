@@ -1,9 +1,17 @@
 import express from "express";
-import { router } from "./routes/route.js";
+// import { router } from "./routes/route.js";
+import { connectDB } from "./utils/db.js";
+import { resourceRouter } from "./routes/resource-route.js";
 
 const app = express();
 
-app.use(router);
+
+
+app.use(express.json())
+
+app.use(resourceRouter);
+
+
 app.get("/", async (req, res) => {
   try {
     res.status(200).json({ message: "Home route working" });
@@ -12,6 +20,16 @@ app.get("/", async (req, res) => {
   }
 });
 
+connectDB()
+  .then(() => {
+    console.log("database connect");
+  })
+  .catch((e) => {
+    console.log("failed to connect");
+  });
 
+// export default app;
 
-export default app;
+app.listen(3000, () => {
+  console.log("server is listing");
+});

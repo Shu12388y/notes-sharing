@@ -1,27 +1,29 @@
 import { Content } from "../schema/resource-schema.js";
 
 export class ContentController {
-  // create subject
-  static async createSubject(req, res) {
+
+  static async createContent(req, res) {
     try {
       const data = await req.body;
-      const { subject } = await data;
-      if (!subject) {
-        return res.status(404).json({ message: "subject name is requried" });
+      const { title, time, description, links, content, resourcesid } =
+        await data;
+      if (!title || !description || !content || !resourcesid) {
+        return res.status(404).json({ message: "Requried field are empty" });
       }
 
-      const isSubjectExists = await Subject.find({
-        name: subject,
+      const timeStamp = new Date().toLocaleDateString().toString();
+
+      const createNewContent = await new Content({
+        title: title,
+        description: description,
+        time: time ? time : timeStamp,
+        links: links ? links : "",
+        content: content,
+        resourcesID: resourcesid,
       });
 
-      if (isSubjectExists.length == 1) {
-        return res.status(402).json({ message: "Subject already exists" });
-      }
-      const createNewSubject = await new Subject({
-        name: subject,
-      });
+      await createNewContent.save();
 
-      await createNewSubject.save();
       return res.status(201).json({ message: "Success" });
     } catch (error) {
       console.log(error);
@@ -31,22 +33,26 @@ export class ContentController {
   }
 
   //update subject
-  static async updateSubject(req, res) {
+  static async updateContent(req, res) {
     try {
       const data = await req.body;
-      const { id, subject } = await data;
+      const { id, title, time, description, links, content } = await data;
       if (!id) {
-        return res.status(404).json({ message: "subject id is requried" });
+        return res.status(404).json({ message: "Content id is requried" });
       }
 
-      const isSubjectExists = await Subject.findById(id);
+      const isContentExists = await Content.findById(id);
 
-      if (!isSubjectExists) {
+      if (!isContentExists) {
         return res.status(402).json({ message: "Subject not exists" });
       }
 
-      await Subject.findByIdAndUpdate(id, {
-        name: subject,
+      await Content.findByIdAndUpdate(id, {
+        title,
+        description,
+        time,
+        links,
+        content
       });
 
       return res.status(200).json({ message: "Success" });
@@ -58,20 +64,20 @@ export class ContentController {
   }
 
   // delete the subject
-  static async deleteSubject(req, res) {
+  static async deleteContent(req, res) {
     try {
-      const params  = await req.params;
+      const params = await req.params;
       if (!params.id) {
         return res.status(404).json({ message: "subject id is requried" });
       }
 
-      const isSubjectExists = await Subject.findById(params.id);
+      const isContentExists = await Content.findById(params.id);
 
-      if (!isSubjectExists) {
+      if (!isContentExists) {
         return res.status(402).json({ message: "Subject not exists" });
       }
 
-      await Subject.findByIdAndDelete(params.id);
+      await Content.findByIdAndDelete(params.id);
 
       return res.status(200).json({ message: "Success" });
     } catch (error) {
@@ -81,13 +87,13 @@ export class ContentController {
   }
 
   // get all subject
-  static async getAllSubjects(_req, res) {
+  static async getAllContents(_req, res) {
     try {
-      const subjects = await Subject.find({});
-      if (subjects.length == 0) {
+      const contents = await Content.find({});
+      if (contents.length == 0) {
         return res.status(200).json({ message: "Success", data: [] });
       }
-      return res.status(200).json({ message: "Success", data: subjects });
+      return res.status(200).json({ message: "Success", data: contents });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: "Internal server error" });
@@ -95,20 +101,41 @@ export class ContentController {
   }
 
   //   get the subject
-  static async getSubjects(req, res) {
+  static async getContent(req, res) {
     try {
       const params = await req.params;
-      if(!params.id){
-        return res.status(404).json({message:"Subject id is required"})
+      if (!params.id) {
+        return res.status(404).json({ message: "Subject id is required" });
       }
-      const subjects = await Subject.findById(params.id);
-      if (!subjects) {
+      const contents = await Content.findById(params.id);
+      if (!contents) {
         return res.status(200).json({ message: "Success", data: {} });
       }
-      return res.status(200).json({ message: "Success", data: subjects });
+      return res.status(200).json({ message: "Success", data: contents });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+
+
+  static async getContentsByResource(req, res) {
+    try {
+      const params = await req.params;
+      const {id} = await params;
+      const contents = await Content.find({
+        resourcesID:id
+      });
+      if (contents.length == 0) {
+        return res.status(200).json({ message: "Success", data: [] });
+      }
+      return res.status(200).json({ message: "Success", data: contents });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+
+
 }

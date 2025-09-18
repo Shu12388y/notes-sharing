@@ -1,5 +1,4 @@
 import express from "express";
-// import { router } from "./routes/route.js";
 import { connectDB } from "./utils/db.js";
 import { resourceRouter } from "./routes/resource-route.js";
 

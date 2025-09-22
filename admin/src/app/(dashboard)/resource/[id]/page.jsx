@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { fetchSubjects } from "@/handlers/handlers";
+import { fetchResources } from "@/handlers/handlers";
 import Link from "next/link";
 import {
   addSubjectAction,
@@ -40,14 +40,23 @@ import {
   updateSubjectAction,
 } from "@/app/actions/subjectActions";
 
-async function Page() {
-  try {
-    const subjects = await fetchSubjects();
+import {
+  addResourceAction,
+  deleteResourceAction,
+  updateResourceAction,
+} from "@/app/actions/resourceAction";
 
-    if (subjects.length == 0) {
+async function Page({ params }) {
+  try {
+    const { id } = await params;
+    const resources = await fetchResources({
+      subjectid: id,
+    });
+
+    if (resources.length == 0) {
       return (
         <>
-          <div>No subject is present</div>
+          <div>No resource is present</div>
         </>
       );
     }
@@ -57,26 +66,35 @@ async function Page() {
         <div className="flex flex-row items-center justify-end">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Add new subject</Button>
+              <Button variant="outline">Add new resource</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add Subject</DialogTitle>
+                <DialogTitle>Add Resource</DialogTitle>
                 <DialogDescription>
-                  Add new subject&apos;s according to your need
+                  Add new resource&apos;s according to your need
                 </DialogDescription>
               </DialogHeader>
 
               {/* ✅ form inside DialogContent */}
-              <form action={addSubjectAction} className="grid gap-4">
+              <form action={addResourceAction} className="grid gap-4">
                 <div className="grid gap-3">
-                  <Label htmlFor="subject">Name</Label>
+                  <Label htmlFor="resource">Name</Label>
                   <Input
-                    id="subject"
-                    name="subject"
+                    id="resource"
+                    name="resource"
                     required
-                    placeholder="Computer Network"
+                    placeholder="DPPs"
+                  />
+
+                  <Label htmlFor="subjectid"></Label>
+                  <Input
+                    id="subjectid"
+                    name="subjectid"
+                    required
+                    type={"hidden"}
+                    defaultValue={id}
                   />
                 </div>
 
@@ -91,7 +109,7 @@ async function Page() {
         </div>
 
         <Table>
-          <TableCaption>A list of your subjects.</TableCaption>
+          <TableCaption>A list of your resources.</TableCaption>
           <TableHeader>
             <TableRow className="flex justify-between">
               <TableHead className="w-[100px]">Name</TableHead>
@@ -103,47 +121,47 @@ async function Page() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {subjects.map((subject) => (
-              <TableRow key={subject._id} className="flex justify-between">
-                <TableCell className="font-medium">{subject.name}</TableCell>
+            {resources.map((resource) => (
+              <TableRow key={resource._id} className="flex justify-between">
+                <TableCell className="font-medium">{resource.name}</TableCell>
                 <TableCell className="flex gap-2">
-                  <Link href={`/resource/${subject._id}`}>
+                  <Link href={`/content/${resource._id}`}>
                     <TableCell asChild className="text-right">
-                      Add Resources
+                      Add Content
                     </TableCell>
                   </Link>
                   <TableCell className="text-right">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">Update subject</Button>
+                        <Button variant="outline">Update resource</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
                           <DialogTitle>Update Subject</DialogTitle>
                           <DialogDescription>
-                            Update subject&apos;s according to your need
+                            Update resource&apos;s according to your need
                           </DialogDescription>
                         </DialogHeader>
 
                         <form
-                          action={updateSubjectAction}
+                          action={updateResourceAction}
                           className="grid gap-4"
                         >
                           <div className="grid gap-3">
-                            <Label htmlFor="usubject">Name</Label>
+                            <Label htmlFor="resource">Name</Label>
                             <Input
-                              id="usubject"
-                              name="usubject"
+                              id="resource"
+                              name="resource"
                               required
-                              defaultValue={subject.name}
+                              defaultValue={resource.name}
                             />
-                            <Label htmlFor="subjectid"></Label>
+                            <Label htmlFor="resourceid"></Label>
                             <Input
-                              id="subjectid"
-                              name="subjectid"
+                              id="resourceid"
+                              name="resourceid"
                               required
-                              defaultValue={subject._id}
+                              defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>
@@ -160,7 +178,7 @@ async function Page() {
                   <TableCell className="text-right">
                     <AlertDialog>
                       <AlertDialogTrigger className="bg-red-500 p-2 text-white rounded-md">
-                        Delete Subject
+                        Delete Resource
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
@@ -175,16 +193,16 @@ async function Page() {
                         </AlertDialogHeader>
 
                         <form
-                          action={deleteSubjectAction}
+                          action={deleteResourceAction}
                           className="grid gap-4"
                         >
                           <div className="grid gap-3">
-                            <Label htmlFor="subjectid"></Label>
+                            <Label htmlFor="resourceid"></Label>
                             <Input
-                              id="subjectid"
-                              name="subjectid"
+                              id="resourceid"
+                              name="resourceid"
                               required
-                              defaultValue={subject._id}
+                              defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>

@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { fetchSubjects } from "@/handlers/handlers";
+import { fetchContents } from "@/handlers/handlers";
 import Link from "next/link";
 import {
   addSubjectAction,
@@ -40,14 +40,17 @@ import {
   updateSubjectAction,
 } from "@/app/actions/subjectActions";
 
-async function Page() {
+async function Page({ params }) {
   try {
-    const subjects = await fetchSubjects();
+    const { id } = await params;
+    const contents = await fetchContents({
+      resourceid: id,
+    });
 
-    if (subjects.length == 0) {
+    if (contents.length == 0) {
       return (
         <>
-          <div>No subject is present</div>
+          <div>No resource is present</div>
         </>
       );
     }
@@ -57,14 +60,14 @@ async function Page() {
         <div className="flex flex-row items-center justify-end">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Add new subject</Button>
+              <Button variant="outline">Add new resource</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add Subject</DialogTitle>
+                <DialogTitle>Add Resource</DialogTitle>
                 <DialogDescription>
-                  Add new subject&apos;s according to your need
+                  Add new resource&apos;s according to your need
                 </DialogDescription>
               </DialogHeader>
 
@@ -91,7 +94,7 @@ async function Page() {
         </div>
 
         <Table>
-          <TableCaption>A list of your subjects.</TableCaption>
+          <TableCaption>A list of your contents.</TableCaption>
           <TableHeader>
             <TableRow className="flex justify-between">
               <TableHead className="w-[100px]">Name</TableHead>
@@ -103,26 +106,32 @@ async function Page() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {subjects.map((subject) => (
-              <TableRow key={subject._id} className="flex justify-between">
-                <TableCell className="font-medium">{subject.name}</TableCell>
+            {contents.map((content) => (
+              <TableRow key={content._id} className="flex justify-between">
+                <TableCell className="font-medium">{content.title}</TableCell>
+                <TableCell className="font-medium">
+                  {content.description}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {content?.links || "NONE"}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {content?.content}
+                </TableCell>
+                <TableCell className="font-medium">{content?.time}</TableCell>
+
                 <TableCell className="flex gap-2">
-                  <Link href={`/resource/${subject._id}`}>
-                    <TableCell asChild className="text-right">
-                      Add Resources
-                    </TableCell>
-                  </Link>
                   <TableCell className="text-right">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">Update subject</Button>
+                        <Button variant="outline">Update resource</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
                           <DialogTitle>Update Subject</DialogTitle>
                           <DialogDescription>
-                            Update subject&apos;s according to your need
+                            Update resource&apos;s according to your need
                           </DialogDescription>
                         </DialogHeader>
 
@@ -136,14 +145,14 @@ async function Page() {
                               id="usubject"
                               name="usubject"
                               required
-                              defaultValue={subject.name}
+                            //   defaultValue={resource.name}
                             />
                             <Label htmlFor="subjectid"></Label>
                             <Input
                               id="subjectid"
                               name="subjectid"
                               required
-                              defaultValue={subject._id}
+                            //   defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>
@@ -184,7 +193,7 @@ async function Page() {
                               id="subjectid"
                               name="subjectid"
                               required
-                              defaultValue={subject._id}
+                            //   defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>

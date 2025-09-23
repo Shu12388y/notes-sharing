@@ -11,7 +11,15 @@ app.use(
     extended: true,
   })
 );
-app.use(fileUpload());
+app.use(fileUpload({
+  limits: { 
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+    files: 5 // max 5 files per request
+  },
+  abortOnLimit: true,
+  createParentPath: true,
+  parseNested: true
+}));
 
 app.use(resourceRouter);
 

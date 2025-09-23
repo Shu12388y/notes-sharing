@@ -6,8 +6,8 @@ export class ContentController {
     try {
       const data = await req.body;
       const file = await req.files;
-      const { title, description, links, resourcesid } = await data;
-      const { content } = await file;
+      const { title, description, links, resourcesid } =  data;
+      const { content } = file;
       if (!title || !description || !content || !resourcesid) {
         return res.status(404).json({ message: "Requried field are empty" });
       }

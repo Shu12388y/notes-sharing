@@ -145,6 +145,9 @@ export const addContent = async ({
   resourcesid,
 }) => {
   try {
+    if (!title || !description || !content || !resourcesid) {
+      return "Title, description, content, and resourcesid are required";
+    }
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);

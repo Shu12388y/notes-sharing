@@ -1,15 +1,19 @@
 import express from "express";
 import { connectDB } from "./utils/db.js";
 import { resourceRouter } from "./routes/resource-route.js";
+import fileUpload from "express-fileupload";
 
 const app = express();
 
-
-
-app.use(express.json())
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(fileUpload());
 
 app.use(resourceRouter);
-
 
 app.get("/", async (req, res) => {
   try {

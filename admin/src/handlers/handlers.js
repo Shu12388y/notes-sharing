@@ -145,5 +145,26 @@ export const addContent = async ({
   resourcesid,
 }) => {
   try {
-  } catch (error) {}
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("links", links);
+    formData.append("content", content);
+    formData.append("resourcesid", resourcesid);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/content`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    const data = await response.data;
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };

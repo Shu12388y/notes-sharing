@@ -39,6 +39,7 @@ import {
   deleteSubjectAction,
   updateSubjectAction,
 } from "@/app/actions/subjectActions";
+import { addContentAction } from "@/app/actions/contentAction";
 
 async function Page({ params }) {
   try {
@@ -50,7 +51,76 @@ async function Page({ params }) {
     if (contents.length == 0) {
       return (
         <>
-          <div>No resource is present</div>
+          <div>
+            <div className="flex flex-row items-center justify-end">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Add new content</Button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add Content</DialogTitle>
+                    <DialogDescription>
+                      Add new content&apos;s according to your need
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  {/* ✅ form inside DialogContent */}
+                  <form action={addContentAction} className="grid gap-4">
+                    <div className="grid gap-3">
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        required
+                        placeholder="Computer Network"
+                      />
+                      <Label htmlFor="description">Description</Label>
+                      <Input
+                        id="description"
+                        name="description"
+                        required
+                        placeholder="Computer Network"
+                      />
+                      <Label htmlFor="link">Link</Label>
+                      <Input
+                        id="link"
+                        name="link"
+                        placeholder="Computer Network"
+                      />
+                      <Label htmlFor="content">Content*</Label>
+                      <div>
+                        <Input
+                          className="h-32"
+                          id="content"
+                          name="content"
+                          required
+                          type="file"
+                        />
+                      </div>
+                      <Label htmlFor="resourceid"></Label>
+                      <Input
+                        id="resourceid"
+                        name="resourceid"
+                        required
+                        type="hidden"
+                        defaultValue={id}
+                        placeholder="Computer Network"
+                      />
+                    </div>
+
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="submit">Add</Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <div className="text-center font-bold">No content is present</div>
+          </div>
         </>
       );
     }
@@ -60,25 +130,53 @@ async function Page({ params }) {
         <div className="flex flex-row items-center justify-end">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Add new resource</Button>
+              <Button variant="outline">Add new content</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add Resource</DialogTitle>
+                <DialogTitle>Add Content</DialogTitle>
                 <DialogDescription>
-                  Add new resource&apos;s according to your need
+                  Add new content&apos;s according to your need
                 </DialogDescription>
               </DialogHeader>
 
               {/* ✅ form inside DialogContent */}
-              <form action={addSubjectAction} className="grid gap-4">
+              <form action={addContentAction} className="grid gap-4">
                 <div className="grid gap-3">
-                  <Label htmlFor="subject">Name</Label>
+                  <Label htmlFor="name">Name</Label>
                   <Input
-                    id="subject"
-                    name="subject"
+                    id="name"
+                    name="name"
                     required
+                    placeholder="Computer Network"
+                  />
+                  <Label htmlFor="description">Description</Label>
+                  <Input
+                    id="description"
+                    name="description"
+                    required
+                    placeholder="Computer Network"
+                  />
+                  <Label htmlFor="link">Link</Label>
+                  <Input id="link" name="link" placeholder="Computer Network" />
+                  <Label htmlFor="content">Content*</Label>
+                  <div>
+                    <Input
+                      className="h-32"
+                      id="content"
+                      name="content"
+                      required
+                      type="file"
+                    />
+                  </div>
+                  <Label htmlFor="resourceid"></Label>
+                  <Input
+                    id="resourceid"
+                    name="resourceid"
+                    required
+                    type="hidden"
+                    defaultValue={id}
                     placeholder="Computer Network"
                   />
                 </div>
@@ -92,33 +190,33 @@ async function Page({ params }) {
             </DialogContent>
           </Dialog>
         </div>
-
         <Table>
           <TableCaption>A list of your contents.</TableCaption>
           <TableHeader>
             <TableRow className="flex justify-between">
-              <TableHead className="w-[100px]">Name</TableHead>
-              <TableHead>
-                <TableHead className="w-[100px]">Resources</TableHead>
-                <TableHead className="text-right">Update</TableHead>
-                <TableHead className="text-right">Delete</TableHead>
-              </TableHead>
+              <TableHead >Name</TableHead>
+              <TableHead className="">Description</TableHead>
+              <TableHead className="">Links</TableHead>
+              <TableHead className="">Content</TableHead>
+              <TableHead className="">Time</TableHead>
+              <TableHead className=""></TableHead>
+              <TableHead className=""></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {contents.map((content) => (
-              <TableRow key={content._id} className="flex justify-between">
-                <TableCell className="font-medium">{content.title}</TableCell>
-                <TableCell className="font-medium">
+              <TableRow key={content._id} className="flex justify-between ">
+                <TableCell className="font-medium text-center">{content.title}</TableCell>
+                <TableCell className="font-medium text-center">
                   {content.description}
                 </TableCell>
-                <TableCell className="font-medium">
-                  {content?.links || "NONE"}
+                <TableCell className="font-medium text-center">
+                  {content?.links.slice(0,20)+"...." || "NONE"}
                 </TableCell>
-                <TableCell className="font-medium">
-                  {content?.content}
+                <TableCell className="font-medium text-center">
+                  {content?.content.slice(0,20) + "...."}
                 </TableCell>
-                <TableCell className="font-medium">{content?.time}</TableCell>
+                <TableCell className="font-medium text-center">{content?.time}</TableCell>
 
                 <TableCell className="flex gap-2">
                   <TableCell className="text-right">
@@ -145,14 +243,14 @@ async function Page({ params }) {
                               id="usubject"
                               name="usubject"
                               required
-                            //   defaultValue={resource.name}
+                              //   defaultValue={resource.name}
                             />
                             <Label htmlFor="subjectid"></Label>
                             <Input
                               id="subjectid"
                               name="subjectid"
                               required
-                            //   defaultValue={resource._id}
+                              //   defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>
@@ -193,7 +291,7 @@ async function Page({ params }) {
                               id="subjectid"
                               name="subjectid"
                               required
-                            //   defaultValue={resource._id}
+                              //   defaultValue={resource._id}
                               type={"hidden"}
                             />
                           </div>

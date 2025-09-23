@@ -56,7 +56,53 @@ async function Page({ params }) {
     if (resources.length == 0) {
       return (
         <>
-          <div>No resource is present</div>
+          <div>
+            <div className="flex flex-row items-center justify-end">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Add new resource</Button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add Resource</DialogTitle>
+                    <DialogDescription>
+                      Add new resource&apos;s according to your need
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  {/* ✅ form inside DialogContent */}
+                  <form action={addResourceAction} className="grid gap-4">
+                    <div className="grid gap-3">
+                      <Label htmlFor="resource">Name</Label>
+                      <Input
+                        id="resource"
+                        name="resource"
+                        required
+                        placeholder="DPPs"
+                      />
+
+                      <Label htmlFor="subjectid"></Label>
+                      <Input
+                        id="subjectid"
+                        name="subjectid"
+                        required
+                        type={"hidden"}
+                        defaultValue={id}
+                      />
+                    </div>
+
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="submit">Add</Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <div className="text-center font-bold">No resource is present</div>
+          </div>
         </>
       );
     }

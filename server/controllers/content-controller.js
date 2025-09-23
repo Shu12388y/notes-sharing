@@ -1,24 +1,30 @@
 import { Content } from "../schema/resource-schema.js";
+import { uploadHelper } from "../utils/imagekit.config.js";
 
 export class ContentController {
-
   static async createContent(req, res) {
     try {
       const data = await req.body;
-      const { title, time, description, links, content, resourcesid } =
-        await data;
+      const file = await req.files;
+      const { title, description, links, resourcesid } = await data;
+      const { content } = await file;
       if (!title || !description || !content || !resourcesid) {
         return res.status(404).json({ message: "Requried field are empty" });
       }
 
       const timeStamp = new Date().toLocaleDateString().toString();
 
+      const info = await uploadHelper({
+        file: content.data,
+        filename: content.name,
+      });
+
       const createNewContent = await new Content({
         title: title,
         description: description,
-        time: time ? time : timeStamp,
-        links: links ? links : "",
-        content: content,
+        time: timeStamp,
+        links: links.length === 0 ? "" : links,
+        content: info,
         resourcesID: resourcesid,
       });
 
@@ -52,7 +58,7 @@ export class ContentController {
         description,
         time,
         links,
-        content
+        content,
       });
 
       return res.status(200).json({ message: "Success" });
@@ -118,13 +124,12 @@ export class ContentController {
     }
   }
 
-
   static async getContentsByResource(req, res) {
     try {
       const params = await req.params;
-      const {id} = await params;
+      const { id } = await params;
       const contents = await Content.find({
-        resourcesID:id
+        resourcesID: id,
       });
       if (contents.length == 0) {
         return res.status(200).json({ message: "Success", data: [] });
@@ -135,7 +140,4 @@ export class ContentController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
-
-
-
 }

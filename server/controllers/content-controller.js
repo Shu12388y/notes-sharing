@@ -6,7 +6,7 @@ export class ContentController {
     try {
       const data = await req.body;
       const file = await req.files;
-      const { title, description, links, resourcesid } =  data;
+      const { title, description, links, resourcesid } = data;
       const { content } = file;
       if (!title || !description || !content || !resourcesid) {
         return res.status(404).json({ message: "Requried field are empty" });
@@ -42,9 +42,11 @@ export class ContentController {
   static async updateContent(req, res) {
     try {
       const data = await req.body;
-      const { id, title, time, description, links, content } = await data;
-      if (!id) {
-        return res.status(404).json({ message: "Content id is requried" });
+      const file = await req.files;
+      const { id, title, description, links, resourcesid, prevContent } = data;
+      const { content } = file;
+      if (!title || !description || !content || !resourcesid || !id) {
+        return res.status(404).json({ message: "Requried field are empty" });
       }
 
       const isContentExists = await Content.findById(id);
@@ -53,13 +55,28 @@ export class ContentController {
         return res.status(402).json({ message: "Subject not exists" });
       }
 
-      await Content.findByIdAndUpdate(id, {
-        title,
-        description,
-        time,
-        links,
-        content,
-      });
+      if (prevContent) {
+        await Content.findByIdAndUpdate(id, {
+          title,
+          description,
+          time,
+          links,
+          content: prevContent,
+        });
+      } else {
+        const info = await uploadHelper({
+          file: content.data,
+          filename: content.name,
+        });
+
+        await Content.findByIdAndUpdate(id, {
+          title,
+          description,
+          time,
+          links,
+          content: info,
+        });
+      }
 
       return res.status(200).json({ message: "Success" });
     } catch (error) {

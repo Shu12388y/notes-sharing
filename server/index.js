@@ -1,27 +1,42 @@
 import express from "express";
 import { connectDB } from "./utils/db.js";
 import { resourceRouter } from "./routes/resource-route.js";
+import { userRouter } from "./routes/user-auth-route.js";
+import { adminRouter } from "./routes/admin-auth-route.js";
 import fileUpload from "express-fileupload";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3001", // your frontend origin
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
-app.use(fileUpload({
-  limits: { 
-    fileSize: 10 * 1024 * 1024, // 10MB limit
-    files: 5 // max 5 files per request
-  },
-  abortOnLimit: true,
-  createParentPath: true,
-  parseNested: true
-}));
+app.use(
+  fileUpload({
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit
+      files: 5, // max 5 files per request
+    },
+    abortOnLimit: true,
+    createParentPath: true,
+    parseNested: true,
+  })
+);
 
+app.use(cookieParser());
 app.use(resourceRouter);
+app.use(userRouter);
+app.use(adminRouter);
 
 app.get("/", async (req, res) => {
   try {

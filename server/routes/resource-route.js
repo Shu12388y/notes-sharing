@@ -2,10 +2,11 @@ import express from "express";
 import { SubjectController } from "../controllers/subject-controller.js";
 import { ResourceController } from "../controllers/resource-controller.js";
 import { ContentController } from "../controllers/content-controller.js";
+import { adminMiddleware } from "../middlewares/middleware.js";
 
 export const resourceRouter = express.Router()
 
-resourceRouter.post("/subject",SubjectController.createSubject);
+resourceRouter.post("/subject",adminMiddleware,SubjectController.createSubject);
 resourceRouter.patch("/subject",SubjectController.updateSubject);
 resourceRouter.delete("/subject/:id",SubjectController.deleteSubject);
 resourceRouter.get("/subjects",SubjectController.getAllSubjects);

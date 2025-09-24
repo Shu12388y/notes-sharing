@@ -59,7 +59,6 @@ export class ContentController {
         await Content.findByIdAndUpdate(id, {
           title,
           description,
-          time,
           links,
           content: prevContent,
         });
@@ -72,7 +71,6 @@ export class ContentController {
         await Content.findByIdAndUpdate(id, {
           title,
           description,
-          time,
           links,
           content: info,
         });

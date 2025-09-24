@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       const info = await verifyHandler();
     }
     handleAuth();
-  }, [checkingAuthorization]);
+  }, []);
 
   return (
     <>

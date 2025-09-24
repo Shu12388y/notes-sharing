@@ -7,7 +7,7 @@ export class AdminController {
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
-        res.status(404).json({ message: "All field are required" });
+        return res.status(400).json({ message: "All field are required" });
       }
 
       // check whether user exist or not
@@ -16,7 +16,7 @@ export class AdminController {
       });
 
       if (isAdminExists.length > 0) {
-        return res.status(401).json({ message: "UnAuthorized" });
+        return res.status(401).json({ message: "Admin already exists" });
       }
 
       if (isAdminExists.length == 0) {
@@ -40,7 +40,7 @@ export class AdminController {
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
-        res.status(404).json({ message: "All field are required" });
+       return res.status(404).json({ message: "All field are required" });
       }
 
       // check whether user exist or not
@@ -52,12 +52,12 @@ export class AdminController {
         return res.status(401).json({ message: "User not exists" });
       }
 
-      const hashedPassword = await bcrypt.compare(
+      const isPasswordValid = await bcrypt.compare(
         password,
         isAdminExists[0].password
       );
 
-      if (!hashedPassword) {
+      if (!isPasswordValid) {
         return res.status(401).json({ message: "Incorrect password" });
       }
 
@@ -71,7 +71,7 @@ export class AdminController {
       });
 
      
-      return res.status(201).json({ message: "Success",token:token });
+      return res.status(200).json({ message: "Success",token:token });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });
@@ -83,7 +83,7 @@ export class AdminController {
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
-        res.status(404).json({ message: "All field are required" });
+       return res.status(404).json({ message: "All field are required" });
       }
 
       // check whether user exist or not

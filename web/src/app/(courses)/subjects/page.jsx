@@ -42,7 +42,7 @@ export default async function Page() {
               No Subjects Found
             </h2>
             <p className="text-gray-500 max-w-md mx-auto">
-              There are currently no subject available. Check back later for updates.
+              There are currently no subjects available. Check back later for updates.
             </p>
           </div>
         </div>

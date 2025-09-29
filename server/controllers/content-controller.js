@@ -1,5 +1,6 @@
 import { Content } from "../schema/resource-schema.js";
 import { uploadHelper } from "../utils/imagekit.config.js";
+import axios from "axios";
 
 export class ContentController {
   static async createContent(req, res) {
@@ -43,9 +44,9 @@ export class ContentController {
     try {
       const data = await req.body;
       const file = await req.files;
-      const { id, title, description, links, resourcesid, prevContent } = data;
+      const { id, title, description, links, prevContent } = data;
       const { content } = file;
-      if (!title || !description || !content || !resourcesid || !id) {
+      if (!title || !description || !content || !id) {
         return res.status(404).json({ message: "Requried field are empty" });
       }
 
@@ -153,6 +154,35 @@ export class ContentController {
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  static async downloadContent(req, res) {
+    try {
+
+      // get the content info
+      const contentId = await req.params;
+      const {id} = await contentId;
+      if(!id){
+        return res.status(401).json({message:"resource id is required"});
+      }
+
+      const isContentExists = await Content.findById(id)
+      
+      if(!isContentExists){
+        return res.status(404).json({message:"Content not exists"});
+      }
+
+      const response = await axios({
+        url: isContentExists.content,
+        method: "GET",
+        responseType: "stream",
+      });
+
+      res.setHeader("Content-Disposition", "attachment; filename=resource.pdf");
+      return response.data.pipe(res);
+    } catch (error) {
+      return res.status(500).json({message:"Internal Server Error"})
     }
   }
 }

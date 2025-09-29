@@ -34,11 +34,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { fetchResources } from "@/handlers/handlers";
 import Link from "next/link";
-import {
-  addSubjectAction,
-  deleteSubjectAction,
-  updateSubjectAction,
-} from "@/app/actions/subjectActions";
 
 import {
   addResourceAction,
@@ -57,7 +52,8 @@ async function Page({ params }) {
       return (
         <>
           <div>
-            <div className="flex flex-row items-center justify-end">
+            <div className="flex flex-row items-center justify-between">
+              <Link href={"/resources"}>Go Back</Link>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline">Add new resource</Button>
@@ -109,7 +105,10 @@ async function Page({ params }) {
 
     return (
       <div>
-        <div className="flex flex-row items-center justify-end">
+        <div className="flex flex-row items-center justify-between mb-10">
+           <Link href={"/resources"}>
+              Go Back
+            </Link>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Add new resource</Button>

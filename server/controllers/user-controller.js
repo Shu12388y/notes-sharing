@@ -71,14 +71,7 @@ export class UserController {
         info: info,
       });
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        maxAge: 3600000,
-      });
-
-      return res.status(201).json({ message: "Success" });
+      return res.status(201).json({ message: "Success",token:token });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });
@@ -119,3 +112,4 @@ export class UserController {
     }
   }
 }
+

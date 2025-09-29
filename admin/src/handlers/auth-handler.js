@@ -1,6 +1,7 @@
 import axios from "axios";
 import { cookieAction, getCookieAction } from "@/app/actions/cookieAction";
 
+
 export const siginHandler = async ({ email, password }) => {
   try {
     const info = {
@@ -17,15 +18,15 @@ export const siginHandler = async ({ email, password }) => {
     });
     return data.message;
   } catch (error) {
-    return error;
+    throw new Error(error.response.data.message);
   }
 };
 
 export const verifyHandler = async () => {
   try {
     const token = await getCookieAction();
-    console.log(token);
+    return token
   } catch (error) {
-    console.log(error);
+    throw new Error(error)
   }
 };

@@ -9,7 +9,7 @@ export const createUserAuthToken = async ({ info }) => {
   try {
     const token = await jwt.sign(info, process.env.USER_SECRET, {
       algorithm: "HS256",
-      expiresIn: "1h",
+      expiresIn: "7d",
     });
     if (!token) {
       return "Failed to generate token";
@@ -25,7 +25,6 @@ export const verifyToken = async ({ token }) => {
     const decode = await jwt.verify(token, process.env.USER_SECRET);
     return decode
   } catch (error) {
-    console.log(error);
-    return error;
+    throw new Error(error)
   }
 };

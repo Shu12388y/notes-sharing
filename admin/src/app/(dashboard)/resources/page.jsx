@@ -47,6 +47,41 @@ async function Page() {
     if (subjects.length == 0) {
       return (
         <>
+          <div className="flex flex-row items-center justify-end">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Add new subject</Button>
+              </DialogTrigger>
+
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Add Subject</DialogTitle>
+                  <DialogDescription>
+                    Add new subject&apos;s according to your need
+                  </DialogDescription>
+                </DialogHeader>
+
+                {/* ✅ form inside DialogContent */}
+                <form action={addSubjectAction} className="grid gap-4">
+                  <div className="grid gap-3">
+                    <Label htmlFor="subject">Name</Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      required
+                      placeholder="Computer Network"
+                    />
+                  </div>
+
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button type="submit">Add</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
           <div>No subject is present</div>
         </>
       );

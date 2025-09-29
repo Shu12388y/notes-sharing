@@ -164,10 +164,75 @@ export const addContent = async ({
       }
     );
     const data = await response.data;
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
+    return error;
+  }
+};
+
+export const updateContent = async ({
+  contentid,
+  title,
+  description,
+  links,
+  prevContent,
+  content,
+}) => {
+  try {
+    if (!title || !description || !content || !contentid) {
+      return "Title, description, content, and resourcesid are required";
+    }
+    const formData = new FormData();
+    if (content) {
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("links", links);
+      formData.append("content", content);
+      formData.append("id", contentid);
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/content`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = await response.data;
+      return data;
+    } else {
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("links", links);
+      formData.append("content", prevContent);
+      formData.append("id", contentid);
+
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/content`,
+        formData
+      );
+      const data = await response.data;
+      return data;
+    }
+  } catch (error) {
+    throw new Error(error.toString());
+  }
+};
+
+export const deleteContent = async ({ contentid }) => {
+  try {
+    if (!contentid) {
+      throw new Error("Content ID is required");
+    }
+
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/content/${contentid}`
+    );
+
+    const data = await response.data;
+    return data;
+  } catch (error) {
     return error;
   }
 };

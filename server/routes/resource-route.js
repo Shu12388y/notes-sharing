@@ -2,7 +2,7 @@ import express from "express";
 import { SubjectController } from "../controllers/subject-controller.js";
 import { ResourceController } from "../controllers/resource-controller.js";
 import { ContentController } from "../controllers/content-controller.js";
-import { adminMiddleware } from "../middlewares/middleware.js";
+import { adminMiddleware,userMiddleware } from "../middlewares/middleware.js";
 
 export const resourceRouter = express.Router()
 
@@ -28,3 +28,4 @@ resourceRouter.delete("/content/:id",ContentController.deleteContent);
 resourceRouter.get("/contents",ContentController.getAllContents);
 resourceRouter.get("/content/:id",ContentController.getContent);
 resourceRouter.get("/contents/:id",ContentController.getContentsByResource);
+resourceRouter.get("/download",userMiddleware,ContentController.downloadContent);

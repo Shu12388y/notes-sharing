@@ -10,10 +10,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function handleAuth() {
-      const info = await verifyHandler();
+      try {
+        await verifyHandler();
+        setCheckingAuthorization(true);
+      } catch (error) {
+        setCheckingAuthorization(false);
+        router.push("/");
+      }
     }
     handleAuth();
-  }, []);
+  }, [router]);
 
   return (
     <>

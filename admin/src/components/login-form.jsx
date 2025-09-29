@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { siginHandler } from "@/handlers/auth-handler";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function LoginForm({ className, ...props }) {
+  const router = useRouter();
   const [info, setInfo] = useState({
     email: "",
     password: "",
@@ -21,13 +23,13 @@ export function LoginForm({ className, ...props }) {
         email: info.email,
         password: info.password,
       });
-      console.log(data)
-      if (data.message == "Success") {
-        toast("Login Successfully");
+      toast.success("Success")
+      if (data === "Success") {
+        router.push("/resources");
       }
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      toast.error(error.toString());
       setLoading(false);
     } finally {
       setLoading(false);

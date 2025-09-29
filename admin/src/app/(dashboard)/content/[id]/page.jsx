@@ -33,13 +33,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { fetchContents } from "@/handlers/handlers";
-import Link from "next/link";
 import {
-  addSubjectAction,
-  deleteSubjectAction,
-  updateSubjectAction,
-} from "@/app/actions/subjectActions";
-import { addContentAction } from "@/app/actions/contentAction";
+  addContentAction,
+  deleteContentAction,
+  updateContentAction,
+} from "@/app/actions/contentAction";
+import Link from "next/link";
 
 async function Page({ params }) {
   try {
@@ -52,7 +51,8 @@ async function Page({ params }) {
       return (
         <>
           <div>
-            <div className="flex flex-row items-center justify-end">
+            <div className="flex flex-row items-center justify-between mb-10">
+              <Link href={"/resources"}>Go Back</Link>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline">Add new content</Button>
@@ -127,7 +127,9 @@ async function Page({ params }) {
 
     return (
       <div>
-        <div className="flex flex-row items-center justify-end">
+        <div className="flex flex-row items-center justify-between mb-10">
+          <Link href={`/resources`}>Go Back</Link>
+
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Add new content</Button>
@@ -194,7 +196,7 @@ async function Page({ params }) {
           <TableCaption>A list of your contents.</TableCaption>
           <TableHeader>
             <TableRow className="flex justify-between">
-              <TableHead >Name</TableHead>
+              <TableHead>Name</TableHead>
               <TableHead className="">Description</TableHead>
               <TableHead className="">Links</TableHead>
               <TableHead className="">Content</TableHead>
@@ -206,53 +208,98 @@ async function Page({ params }) {
           <TableBody>
             {contents.map((content) => (
               <TableRow key={content._id} className="flex justify-between ">
-                <TableCell className="font-medium text-center">{content.title}</TableCell>
+                <TableCell className="font-medium text-center">
+                  {content.title}
+                </TableCell>
                 <TableCell className="font-medium text-center">
                   {content.description}
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  {content?.links.slice(0,20)+"...." || "NONE"}
+                  {content?.links.slice(0, 20) + "...." || "NONE"}
                 </TableCell>
                 <TableCell className="font-medium text-center">
-                  {content?.content.slice(0,20) + "...."}
+                  {content?.content.slice(0, 20) + "...."}
                 </TableCell>
-                <TableCell className="font-medium text-center">{content?.time}</TableCell>
+                <TableCell className="font-medium text-center">
+                  {content?.time}
+                </TableCell>
 
                 <TableCell className="flex gap-2">
                   <TableCell className="text-right">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">Update resource</Button>
+                        <Button variant="outline">Update content</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                          <DialogTitle>Update Subject</DialogTitle>
+                          <DialogTitle>Update Content</DialogTitle>
                           <DialogDescription>
-                            Update resource&apos;s according to your need
+                            Update content&apos;s according to your need
                           </DialogDescription>
                         </DialogHeader>
 
+                        {/* ✅ form inside DialogContent */}
                         <form
-                          action={updateSubjectAction}
+                          action={updateContentAction}
                           className="grid gap-4"
                         >
                           <div className="grid gap-3">
-                            <Label htmlFor="usubject">Name</Label>
+                            <Label htmlFor="id"></Label>
                             <Input
-                              id="usubject"
-                              name="usubject"
+                              id="id"
+                              name="id"
                               required
-                              //   defaultValue={resource.name}
+                              defaultValue={content._id}
+                              placeholder="Computer Network"
                             />
-                            <Label htmlFor="subjectid"></Label>
+
+                            <Label htmlFor="name">Name</Label>
                             <Input
-                              id="subjectid"
-                              name="subjectid"
+                              id="name"
+                              name="name"
                               required
-                              //   defaultValue={resource._id}
+                              defaultValue={content.title}
+                              placeholder="Computer Network"
+                            />
+                            <Label htmlFor="description">Description</Label>
+                            <Input
+                              id="description"
+                              name="description"
+                              required
+                              defaultValue={content.description}
+                              placeholder="Computer Network"
+                            />
+                            <Label htmlFor="link">Link</Label>
+                            <Input
+                              id="link"
+                              name="link"
+                              defaultValue={content.links}
+                              placeholder="Computer Network"
+                            />
+                            <Label htmlFor="prevContent"></Label>
+                            <Input
+                              id="prevContent"
+                              name="prevContent"
                               type={"hidden"}
+                              defaultValue={content.content}
                             />
+                            <Label htmlFor="content">Content*</Label>
+                            <div>
+                              <a
+                                className="text-red-400 underline"
+                                href={content.content}
+                                target="_blank"
+                              >
+                                Preview Content{" "}
+                              </a>
+                              <Input
+                                className="h-32"
+                                id="content"
+                                name="content"
+                                type="file"
+                              />
+                            </div>
                           </div>
 
                           <DialogFooter>
@@ -267,7 +314,7 @@ async function Page({ params }) {
                   <TableCell className="text-right">
                     <AlertDialog>
                       <AlertDialogTrigger className="bg-red-500 p-2 text-white rounded-md">
-                        Delete Subject
+                        Delete Content
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
@@ -282,16 +329,16 @@ async function Page({ params }) {
                         </AlertDialogHeader>
 
                         <form
-                          action={deleteSubjectAction}
+                          action={deleteContentAction}
                           className="grid gap-4"
                         >
                           <div className="grid gap-3">
-                            <Label htmlFor="subjectid"></Label>
+                            <Label htmlFor="contentid"></Label>
                             <Input
-                              id="subjectid"
-                              name="subjectid"
+                              id="contentid"
+                              name="contentid"
                               required
-                              //   defaultValue={resource._id}
+                              defaultValue={content._id}
                               type={"hidden"}
                             />
                           </div>

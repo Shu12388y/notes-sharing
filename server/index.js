@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3001", // your frontend origin
+    origin: ["http://localhost:3001","https://notes-sharing-obyi.vercel.app","https://notes-sharing-rpw9.vercel.app"], // your frontend origin
     credentials: true,
   })
 );

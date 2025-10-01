@@ -1,11 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import Link from "next/link";
-
+import { useAuth } from "@/context/auth-context";
+import { loggOutUser } from "@/handlers/handlers";
 const Header = () => {
+  const { isLoggedIn, handleIslogin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -17,20 +18,24 @@ const Header = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleLogin = () => setIsLoggedIn(!isLoggedIn);
 
   const menuItems = [
     { name: "About", href: "#about" },
-    { name: "Download Notes", href: "#notes" },
+    { name: "Download Notes", href: "/subjects" },
     { name: "My Courses", href: "#courses" },
   ];
+
+  async function handleLoggOut() {
+    await loggOutUser();
+    handleIslogin();
+  }
 
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
           ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-purple-100"
-          : "bg-transparent"
+          : "bg-white"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,7 +61,7 @@ const Header = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 group-hover:w-full transition-all duration-300"></span>
               </a>
             ))}
-            <Link href={"/signin"}>
+            <div>
               <button
                 className={`flex items-center space-x-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
                   isLoggedIn
@@ -64,10 +69,20 @@ const Header = () => {
                     : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg"
                 }`}
               >
-                {isLoggedIn ? <LogOut size={16} /> : <User size={16} />}
-                <span>{isLoggedIn ? "Logout" : "Login"}</span>
+                {isLoggedIn ? (
+                  <button onClick={handleLoggOut}>
+                    <LogOut size={16} />
+                  </button>
+                ) : (
+                  <Link href={"/signin"}>
+                    <User size={16} />
+                  </Link>
+                )}
+                <span>
+                  {isLoggedIn ? "Logout" : <Link href={"/signin"}>Login</Link>}
+                </span>
               </button>
-            </Link>
+            </div>
           </nav>
 
           {/* Mobile menu button */}
@@ -117,7 +132,6 @@ const Header = () => {
             ))}
             <button
               onClick={() => {
-                toggleLogin();
                 setIsMenuOpen(false);
               }}
               className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${

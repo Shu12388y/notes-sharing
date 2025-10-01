@@ -159,7 +159,6 @@ export class ContentController {
 
   static async downloadContent(req, res) {
     try {
-
       // get the content info
       const contentId = await req.params;
       const {id} = await contentId;

@@ -28,4 +28,4 @@ resourceRouter.delete("/content/:id",ContentController.deleteContent);
 resourceRouter.get("/contents",ContentController.getAllContents);
 resourceRouter.get("/content/:id",ContentController.getContent);
 resourceRouter.get("/contents/:id",ContentController.getContentsByResource);
-resourceRouter.get("/download",userMiddleware,ContentController.downloadContent);
+resourceRouter.get("/download/:id",userMiddleware,ContentController.downloadContent);

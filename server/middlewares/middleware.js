@@ -20,6 +20,7 @@ export const adminMiddleware = async (req, res, next) => {
 export const userMiddleware = async (req, res, next) => {
   try {
     const authHeader = await req.headers["authorization"];
+
     if (!authHeader) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -38,6 +39,7 @@ export const userMiddleware = async (req, res, next) => {
     req.userInfo = userInfo;
     next();
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: error.toString() });
   }
 };

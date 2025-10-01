@@ -181,6 +181,7 @@ export class ContentController {
       res.setHeader("Content-Disposition", "attachment; filename=resource.pdf");
       return response.data.pipe(res);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({message:"Internal Server Error"})
     }
   }

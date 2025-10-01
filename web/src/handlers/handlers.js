@@ -89,8 +89,9 @@ export const downloadContents = async ({ id }) => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/download/${id}`,
       {
+        responseType:"blob",
         headers: {
-          Authorization: getUserHeader,
+          Authorization: getUserHeader.value,
         },
       }
     );

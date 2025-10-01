@@ -12,13 +12,10 @@ import {
   Search,
   ChevronLeft,
 } from "lucide-react";
-import {
-  fetchResources,
-  fetchSubjects,
-  fetchContents,
-} from "@/handlers/handlers";
+import { fetchContents } from "@/handlers/handlers";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
+import DownloadContent from "@/components/DownloadContent";
 
 export default async function Page({ params }) {
   let notes = [];
@@ -133,13 +130,8 @@ export default async function Page({ params }) {
                     </Link>
                   </>
                 )}
-                <Link
-                  href={`${note.content}`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                >
-                  Download Notes
-                  <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                </Link>
+
+                <DownloadContent id={note._id} />
               </CardFooter>
             </Card>
           ))}

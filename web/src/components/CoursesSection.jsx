@@ -26,29 +26,26 @@ const CoursesSection = () => {
   const courses = [
     {
       id: 1,
-      title: "GATE CSE Complete Course 2024",
+      title: "Theory of Computation",
       description: "Comprehensive preparation course covering all GATE CSE topics with detailed explanations, practice problems, and mock tests designed for success.",
       videoId: "dQw4w9WgXcQ",
-      duration: "120 hours",
+      duration: "12 hours",
       students: "2,500+",
       rating: 4.9,
-      price: "₹12,999",
-      originalPrice: "₹19,999",
-      thumbnail: "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=800",
-      features: ["Live Sessions", "Doubt Clearing", "Mock Tests", "Study Materials"]
+      thumbnail: "https://i.ytimg.com/vi/jViPmwfhFnk/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBdpR_CViW_K8DCFld2eik0IesOVw",
+      link:"https://www.youtube.com/playlist?list=PLOG_8OlGMp71Bw-PCIVpP5kS2iJtvxZBz"
     },
     {
       id: 2,
-      title: "Data Structures & Algorithms Mastery",
+      title: "Computer Networks",
       description: "Deep dive into DSA concepts with practical implementations, problem-solving techniques, and competitive programming strategies.",
       videoId: "dQw4w9WgXcQ",
       duration: "80 hours",
       students: "1,800+",
       rating: 4.8,
-      price: "₹8,999",
-      originalPrice: "₹14,999",
-      thumbnail: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800",
-      features: ["Coding Practice", "Interview Prep", "Real Projects", "Mentorship"]
+
+      thumbnail: "https://i.ytimg.com/vi/3SbtNuK5YZ8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBpzydybK4gg2BSsw3SVWsUf0wE7Q",
+      link:"https://www.youtube.com/playlist?list=PLOG_8OlGMp73hMyn-WX1M2Q4ON98DmaRq"
     }
   ];
 
@@ -106,10 +103,7 @@ const CoursesSection = () => {
                     </div>
                   </div>
 
-                  {/* Price Badge */}
-                  <div className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                    {course.price}
-                  </div>
+                 
                 </div>
               </div>
 
@@ -129,7 +123,6 @@ const CoursesSection = () => {
                     </div>
                     <span className="text-white/80 text-sm">({course.rating})</span>
                   </div>
-                  <div className="text-white/60 text-sm line-through">{course.originalPrice}</div>
                 </div>
 
                 <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-yellow-400 transition-colors duration-300">
@@ -151,24 +144,16 @@ const CoursesSection = () => {
                 </div>
 
                 {/* Features */}
-                <div className="grid grid-cols-2 gap-2 mb-6">
-                  {course.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center text-white/70 text-sm">
-                      <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-2"></div>
-                      {feature}
-                    </div>
-                  ))}
-                </div>
+               
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
+                  <a href={course.link} target='_blank'>
                   <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center group">
-                    <span>Enroll Now</span>
+                    <span>Watch Now</span>
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </button>
-                  <button className="px-6 py-3 border-2 border-white/30 hover:border-white/50 text-white hover:bg-white/10 rounded-xl font-semibold transition-all duration-300">
-                    Preview
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

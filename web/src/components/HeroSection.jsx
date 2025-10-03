@@ -112,7 +112,7 @@ const HeroSection = () => {
               <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-pink-400/20"></div>
                 <img
-                  src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="./photo.jpeg"
                   alt="Ankit Doyla - Academic Head GATE CSIT"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
   if (checking) {
     return (
       <div className="flex items-center justify-center h-screen">
-        Loading...
       </div>
     );
   }

@@ -13,7 +13,6 @@ import toast from "react-hot-toast";
 
 export function SignUpForm({ className, ...props }) {
   const router = useRouter();
-  const { checkIsLoggedIn } = useAuth();
   const [userinfo, setUserInfo] = useState({
     fullname: "",
     email: "",

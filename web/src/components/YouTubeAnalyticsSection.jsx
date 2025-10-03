@@ -266,7 +266,7 @@ const YouTubeAnalyticsSection = () => {
                   {/* Enhanced Value Display */}
                   <div className="mb-6">
                     <div className={`text-5xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                      {item.displayValue}
+                      {item.displayValue}+
                     </div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-gray-700 font-semibold text-lg">{item.label}</span>
@@ -282,7 +282,7 @@ const YouTubeAnalyticsSection = () => {
                     <div 
                       className={`h-3 bg-gradient-to-r ${item.color} rounded-full transition-all duration-3000 ease-out shadow-sm`}
                       style={{ 
-                        width: isVisible ? `${progressPercentage}%` : '0%' 
+                        width: isVisible ? `100%` : '0%' 
                       }}
                     ></div>
                   </div>

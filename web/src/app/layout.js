@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ankit Doylas",
-  description: "Gate CS",
+  title: "Ankit Doyla | Top GATE CS IT Educator",
+  description: "Ankit Doyla | Top GATE CS IT Educator",
 };
 
 export default function RootLayout({ children }) {

@@ -32,19 +32,19 @@ const AboutSection = () => {
     },
     {
       icon: Users,
-      value: "5000+",
+      value: "100k+",
       label: "Students Taught",
       color: "from-blue-500 to-cyan-500",
     },
     {
       icon: BookOpen,
-      value: "50+",
-      label: "Courses Created",
+      value: "1000+",
+      label: "IIT/PSU/NIT/ Other GOV EXAM Selections",
       color: "from-green-500 to-teal-500",
     },
     {
       icon: TrendingUp,
-      value: "95%",
+      value: "99%",
       label: "Success Rate",
       color: "from-orange-500 to-red-500",
     },

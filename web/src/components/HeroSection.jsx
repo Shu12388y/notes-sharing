@@ -57,12 +57,9 @@ const HeroSection = () => {
 
               <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient">
-                  Ankit
+                  Ankit   Doyla
                 </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient animation-delay-500">
-                  Doyla
-                </span>
+               
               </h1>
 
               <div className="relative">
@@ -124,16 +121,14 @@ const HeroSection = () => {
               {/* Floating Achievement Badge */}
               <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-4 rounded-2xl shadow-2xl transform rotate-12 hover:rotate-0 transition-transform duration-300 animate-bounce-slow">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">5000+</div>
-                  <div className="text-xs font-medium">Students</div>
+                  <div className="text-lg font-bold">Building India’s Next Tech Leaders </div>
                 </div>
               </div>
 
               {/* Floating Success Rate */}
               <div className="absolute -top-6 -left-6 bg-gradient-to-r from-green-400 to-blue-500 text-white p-4 rounded-2xl shadow-2xl transform -rotate-12 hover:rotate-0 transition-transform duration-300 animate-bounce-slow animation-delay-1000">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">95%</div>
-                  <div className="text-xs font-medium">Success</div>
+                  <div className="text-lg font-bold">Mentor with a Mission </div>
                 </div>
               </div>
             </div>

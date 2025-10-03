@@ -166,12 +166,12 @@ const CoursesSection = () => {
         }`}>
           <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20">
             <h3 className="text-3xl font-bold text-white mb-4">Ready to Start Your Journey?</h3>
-            <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-              Join thousands of successful students who have achieved their GATE dreams with our comprehensive courses.
+            <p className="text-white/80 mb-6 max-w-2xl mx-auto">              
+              Join Lakhs of successful students who have achieved their GATE dreams with our comprehensive courses.
             </p>
-            <button className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl">
+            <a href='https://unacademy.com/goal/gate-csit-dsai-placements/NVLIA/subscribe?plan_type=plus&referral_code=ADRULE' target='_blank' className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl">
               View All Courses
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import { verifyToken } from "../utils/jwt.config.js";
 import { User } from "../schema/auth-schema.js";
+import { connectDB } from "../utils/db.js";
 
 export const adminMiddleware = async (req, res, next) => {
   try {
+    await connectDB();
     const info = await req.cookies;
     // if (!info) {
     //   return res.status(401).json({ message: "Unauthorized" });
@@ -19,6 +21,7 @@ export const adminMiddleware = async (req, res, next) => {
 
 export const userMiddleware = async (req, res, next) => {
   try {
+    await connectDB()
     const authHeader = await req.headers["authorization"];
 
     if (!authHeader) {

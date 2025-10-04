@@ -24,28 +24,23 @@ const CoursesSection = () => {
   }, []);
 
   const courses = [
+      {
+      id: 2,
+      title: "Computer Networks",
+      description: "Deep dive into DSA concepts with practical implementations, problem-solving techniques, and competitive programming strategies.",
+      videoId: "dQw4w9WgXcQ",
+      rating: 5,
+      thumbnail: "https://i.ytimg.com/vi/3SbtNuK5YZ8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBpzydybK4gg2BSsw3SVWsUf0wE7Q",
+      link:"https://www.youtube.com/playlist?list=PLOG_8OlGMp73hMyn-WX1M2Q4ON98DmaRq"
+    },
     {
       id: 1,
       title: "Theory of Computation",
       description: "Comprehensive preparation course covering all GATE CSE topics with detailed explanations, practice problems, and mock tests designed for success.",
       videoId: "dQw4w9WgXcQ",
-      duration: "12 hours",
-      students: "2,500+",
-      rating: 4.9,
+      rating: 5,
       thumbnail: "https://i.ytimg.com/vi/jViPmwfhFnk/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBdpR_CViW_K8DCFld2eik0IesOVw",
       link:"https://www.youtube.com/playlist?list=PLOG_8OlGMp71Bw-PCIVpP5kS2iJtvxZBz"
-    },
-    {
-      id: 2,
-      title: "Computer Networks",
-      description: "Deep dive into DSA concepts with practical implementations, problem-solving techniques, and competitive programming strategies.",
-      videoId: "dQw4w9WgXcQ",
-      duration: "80 hours",
-      students: "1,800+",
-      rating: 4.8,
-
-      thumbnail: "https://i.ytimg.com/vi/3SbtNuK5YZ8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBpzydybK4gg2BSsw3SVWsUf0wE7Q",
-      link:"https://www.youtube.com/playlist?list=PLOG_8OlGMp73hMyn-WX1M2Q4ON98DmaRq"
     }
   ];
 
@@ -131,17 +126,7 @@ const CoursesSection = () => {
                 
                 <p className="text-white/80 mb-6 leading-relaxed">{course.description}</p>
                 
-                {/* Course Stats */}
-                <div className="flex items-center justify-between text-sm text-white/60 mb-6">
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{course.duration}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-4 h-4 mr-1" />
-                    <span>{course.students} enrolled</span>
-                  </div>
-                </div>
+            
 
                 {/* Features */}
                

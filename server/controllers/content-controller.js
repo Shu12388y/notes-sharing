@@ -1,10 +1,12 @@
 import { Content } from "../schema/resource-schema.js";
 import { uploadHelper } from "../utils/imagekit.config.js";
 import axios from "axios";
+import { connectDB } from "../utils/db.js";
 
 export class ContentController {
   static async createContent(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const file = await req.files;
       const { title, description, links, resourcesid } = data;
@@ -42,6 +44,7 @@ export class ContentController {
   //update subject
   static async updateContent(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const file = await req.files;
       const { id, title, description, links, prevContent } = data;
@@ -88,6 +91,7 @@ export class ContentController {
   // delete the subject
   static async deleteContent(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       if (!params.id) {
         return res.status(404).json({ message: "subject id is requried" });
@@ -111,6 +115,7 @@ export class ContentController {
   // get all subject
   static async getAllContents(_req, res) {
     try {
+      await connectDB();
       const contents = await Content.find({});
       if (contents.length == 0) {
         return res.status(200).json({ message: "Success", data: [] });
@@ -125,6 +130,7 @@ export class ContentController {
   //   get the subject
   static async getContent(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       if (!params.id) {
         return res.status(404).json({ message: "Subject id is required" });
@@ -142,6 +148,7 @@ export class ContentController {
 
   static async getContentsByResource(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       const { id } = await params;
       const contents = await Content.find({
@@ -160,16 +167,17 @@ export class ContentController {
   static async downloadContent(req, res) {
     try {
       // get the content info
+      await connectDB();
       const contentId = await req.params;
-      const {id} = await contentId;
-      if(!id){
-        return res.status(401).json({message:"resource id is required"});
+      const { id } = await contentId;
+      if (!id) {
+        return res.status(401).json({ message: "resource id is required" });
       }
 
-      const isContentExists = await Content.findById(id)
-      
-      if(!isContentExists){
-        return res.status(404).json({message:"Content not exists"});
+      const isContentExists = await Content.findById(id);
+
+      if (!isContentExists) {
+        return res.status(404).json({ message: "Content not exists" });
       }
 
       const response = await axios({
@@ -181,8 +189,8 @@ export class ContentController {
       res.setHeader("Content-Disposition", "attachment; filename=resource.pdf");
       return response.data.pipe(res);
     } catch (error) {
-      console.log(error)
-      return res.status(500).json({message:"Internal Server Error"})
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }

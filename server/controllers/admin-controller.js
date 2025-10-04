@@ -1,9 +1,11 @@
 import { Admin } from "../schema/admin-schema.js";
 import { createUserAuthToken, verifyToken } from "../utils/jwt.config.js";
+import { connectDB } from "../utils/db.js";
 import bcrypt from "bcryptjs";
 export class AdminController {
   static async SignUp(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
@@ -37,6 +39,7 @@ export class AdminController {
 
   static async SignIN(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
@@ -80,6 +83,7 @@ export class AdminController {
 
   static async forgetPassword(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {

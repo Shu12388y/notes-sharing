@@ -1,8 +1,10 @@
 import { Resource } from "../schema/resource-schema.js";
+import { connectDB } from "../utils/db.js";
 
 export class ResourceController {
   static async createResource(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { resource, subjectid } = await data;
       if (!resource || !subjectid) {
@@ -33,6 +35,7 @@ export class ResourceController {
 
   static async updateResource(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { resource, id } = await data;
       if (!resource || !id) {
@@ -57,6 +60,7 @@ export class ResourceController {
 
   static async deleteResource(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       const { id } = await params;
       if (!id) {
@@ -78,6 +82,7 @@ export class ResourceController {
 
   static async getAllResource(_req, res) {
     try {
+      await connectDB();
       const resources = await Resource.find({});
       if (resources.length == 0) {
         return res.status(200).json({ message: "success", data: [] });
@@ -90,6 +95,7 @@ export class ResourceController {
 
   static async getResource(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       const { id } = await params;
       const resources = await Resource.findById(id);
@@ -104,6 +110,7 @@ export class ResourceController {
 
   static async getResourceBySubjectID(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       const { id } = await params;
       if (!id) {

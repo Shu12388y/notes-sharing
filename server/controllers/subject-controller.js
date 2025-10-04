@@ -1,9 +1,10 @@
 import { Subject } from "../schema/resource-schema.js";
-
+import { connectDB } from "../utils/db.js";
 export class SubjectController {
   // create subject
   static async createSubject(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { subject } = await data;
       if (!subject) {
@@ -33,6 +34,7 @@ export class SubjectController {
   //update subject
   static async updateSubject(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { id, subject } = await data;
       if (!id) {
@@ -60,6 +62,7 @@ export class SubjectController {
   // delete the subject
   static async deleteSubject(req, res) {
     try {
+      await connectDB();
       const params  = await req.params;
       if (!params.id) {
         return res.status(404).json({ message: "subject id is requried" });
@@ -83,6 +86,7 @@ export class SubjectController {
   // get all subject
   static async getAllSubjects(_req, res) {
     try {
+      await connectDB();
       const subjects = await Subject.find({});
       if (subjects.length == 0) {
         return res.status(200).json({ message: "Success", data: [] });
@@ -97,6 +101,7 @@ export class SubjectController {
   //   get the subject
   static async getSubjects(req, res) {
     try {
+      await connectDB();
       const params = await req.params;
       if(!params.id){
         return res.status(404).json({message:"Subject id is required"})

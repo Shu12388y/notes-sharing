@@ -199,10 +199,7 @@ const YouTubeAnalyticsSection = () => {
         <div className={`text-center mb-20 transform transition-all duration-1000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
-          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 via-purple-100 to-green-100 rounded-full text-blue-700 text-sm font-medium mb-6 shadow-lg">
-            <BarChart3 className="w-5 h-5 mr-2" />
-            Portfolio Analytics Dashboard
-          </div>
+          
           <h2 className="text-6xl font-bold text-gray-900 mb-4">
             YouTube Analytics
           </h2>

@@ -106,12 +106,11 @@ const HeroSection = () => {
               <div className="absolute inset-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 animate-spin-reverse opacity-30"></div>
 
               {/* Profile Image Container */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-pink-400/20"></div>
+              <div className="relative w-80 h-80 lg:w-[30rem] lg:h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500">
                 <img
                   src="./photo.jpeg"
                   alt="Ankit Doyla - Academic Head GATE CSIT"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 "
                 />
 
                 {/* Overlay Gradient */}

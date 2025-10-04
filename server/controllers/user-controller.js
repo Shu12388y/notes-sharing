@@ -1,9 +1,11 @@
 import { User } from "../schema/auth-schema.js";
 import { createUserAuthToken } from "../utils/jwt.config.js";
 import bcrypt from "bcryptjs";
+import { connectDB } from "../utils/db.js";
 export class UserController {
   static async SignUp(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { fullname, email, password, contact, yop, branch } = await data;
       if (!fullname || !email || !password || !contact || !yop || !branch) {
@@ -38,6 +40,7 @@ export class UserController {
 
   static async SignIN(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {
@@ -80,6 +83,7 @@ export class UserController {
 
   static async forgetPassword(req, res) {
     try {
+      await connectDB();
       const data = await req.body;
       const { email, password } = await data;
       if (!email || !password) {

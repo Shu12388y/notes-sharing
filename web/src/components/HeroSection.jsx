@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Sparkles, BookOpen, Download } from "lucide-react";
+import { ChevronDown, Sparkles, BookOpen } from "lucide-react";
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);

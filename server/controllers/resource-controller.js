@@ -1,4 +1,4 @@
-import { Resource } from "../schema/resource-schema.js";
+import { Resource,Subject } from "../schema/resource-schema.js";
 import { connectDB } from "../utils/db.js";
 
 export class ResourceController {
@@ -13,12 +13,10 @@ export class ResourceController {
           .json({ message: "Resource and subject id is required" });
       }
 
-      const isResourceExists = await Resource.find({
-        name: resource,
-      });
+      const isSubjectExists = await Subject.findById(subjectid)
 
-      if (isResourceExists.length == 1) {
-        return res.status(404).json({ message: "Resource already exists" });
+      if (!isSubjectExists) {
+        return res.status(404).json({ message: "Subject not exists" });
       }
 
       const createNewResource = await new Resource({

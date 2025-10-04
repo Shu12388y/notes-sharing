@@ -8,6 +8,7 @@ import {
 import { Book, ArrowRight, AlertCircle, Search, ChevronLeft } from "lucide-react";
 import {  fetchResources } from "@/handlers/handlers";
 import Link from "next/link";
+export const revalidate = 10; 
 
 export default async function Page({ params }) {
   let resources = [];

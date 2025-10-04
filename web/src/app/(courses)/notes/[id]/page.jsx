@@ -14,8 +14,9 @@ import {
 } from "lucide-react";
 import { fetchContents } from "@/handlers/handlers";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
 import DownloadContent from "@/components/DownloadContent";
+export const revalidate = 10; // seconds
+
 
 export default async function Page({ params }) {
   let notes = [];
